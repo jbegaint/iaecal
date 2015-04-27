@@ -22,7 +22,13 @@ class Calendar(iCalendar):
     def __init__(self, n_weeks, *args, **kwargs):
         super(Calendar, self).__init__(*args, **kwargs)
 
+        self.login_url = os.environ.get('CAL_LOGIN_URL')
+        self.events_url = os.environ.get('CAL_EVENTS_URL')
+        self.username = os.environ.get('CAL_USERNAME')
+        self.password = os.environ.get('CAL_PASSWORD'),
+
         self.n_weeks = self.parse_n_weeks(n_weeks)
+
         self.add('prodid', '-//IAE Calendar//')
         self.add('version', '2.0')
 
@@ -41,17 +47,14 @@ class Calendar(iCalendar):
 
     def get_data(self):
         s = requests.Session()
-        login_url = os.environ.get('CAL_LOGIN_URL')
-        events_url = os.environ.get('CAL_EVENTS_URL')
         res = []
-
         payload = {
-            'username': os.environ.get('CAL_USERNAME'),
-            'password': os.environ.get('CAL_PASSWORD')
+            'username': self.username,
+            'password': self.password
         }
 
         # login
-        r = s.post(login_url, data=payload)
+        r = s.post(self.login_url, data=payload)
 
         # make one week long requests only
         for i in range(0, self.n_weeks):
@@ -63,7 +66,7 @@ class Calendar(iCalendar):
             start = dtstart.strftime('%s')
             end = dtend.strftime('%s')
 
-            url = events_url + '?&start=' + start + '&end=' + end
+            url = self.events_url + '?&start=' + start + '&end=' + end
 
             # get data
             r = s.get(url)
