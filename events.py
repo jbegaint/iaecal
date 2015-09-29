@@ -3,10 +3,12 @@
 import requests
 import json
 import os
-from icalendar import Calendar as iCalendar, Event
+import pytz
+from icalendar import Calendar as iCalendar, Event, Timezone
 from datetime import datetime, timedelta
 
 MAX_N_WEEKS = 10
+TIMEZONE = "Europe/Paris"
 
 
 # utils functions
@@ -35,6 +37,13 @@ class Calendar(iCalendar):
 
         self.add('prodid', '-//IAE Calendar//')
         self.add('version', '2.0')
+
+        # Add Timezone info
+        self.add('x-wr-timezone', TIMEZONE)
+        tzc = Timezone()
+        tzc.add('tzid', TIMEZONE)
+        tzc.add('x-lic-location', TIMEZONE)
+        self.add_component(tzc)
 
     def parse_n_weeks(self, n_weeks):
         try:
@@ -82,8 +91,9 @@ class Calendar(iCalendar):
     def add_event(self, e):
         event = Event()
         event.add('summary', e['title'])
-        event.add('dtstart', string_to_datetime(e['start']))
-        event.add('dtend', string_to_datetime(e['end']))
+        tz = pytz.timezone(TIMEZONE)
+        event.add('dtstart', tz.localize(string_to_datetime(e['start'])))
+        event.add('dtend', tz.localize(string_to_datetime(e['end'])))
 
         self.add_component(event)
 
