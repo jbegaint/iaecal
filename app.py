@@ -12,7 +12,7 @@ ENV_VARS = [
     'CAL_PASSWORD',
     'CAL_USERNAME',
 ]
-N_WEEKS = 4
+N_WEEKS = 1
 
 
 def is_env_conf_valid():
@@ -28,10 +28,7 @@ def hello():
         return "Invalid configuration"
 
     n = request.args.get('nWeeks', N_WEEKS)
-    cal = Calendar(n)
-    cal.update()
-
-    return cal.display()
+    return Calendar(n).update().display()
 
 
 if __name__ == "__main__":

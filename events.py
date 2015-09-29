@@ -47,6 +47,7 @@ class Calendar(iCalendar):
         data = self.get_data()
         for item in data:
             self.add_event(item)
+        return self
 
     def get_data(self):
         session = requests.Session()
