@@ -34,5 +34,5 @@ def hello():
 
 
 if __name__ == "__main__":
-    DEBUG = bool(os.environ.get('FLASK_DEBUG', True))
+    DEBUG = bool(os.environ.get('FLASK_DEBUG', False))
     app.run(debug=DEBUG)
