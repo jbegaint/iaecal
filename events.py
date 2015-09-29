@@ -27,6 +27,10 @@ class Calendar(iCalendar):
         self.username = os.environ.get('CAL_USERNAME')
         self.password = os.environ.get('CAL_PASSWORD'),
 
+        if (not self.login_url or not self.events_url or not
+                self.username or not self.password):
+            raise ValueError('Invalid configuration')
+
         self.n_weeks = self.parse_n_weeks(n_weeks)
 
         self.add('prodid', '-//IAE Calendar//')
@@ -34,10 +38,9 @@ class Calendar(iCalendar):
 
     def parse_n_weeks(self, n_weeks):
         try:
-            n = clamp(int(n_weeks), MAX_N_WEEKS)
-        except:
+            n = clamp(int(n_weeks), 1, MAX_N_WEEKS)
+        except ValueError:
             n = 1
-
         return n
 
     def update(self):
@@ -46,40 +49,34 @@ class Calendar(iCalendar):
             self.add_event(item)
 
     def get_data(self):
-        s = requests.Session()
-        res = []
+        session = requests.Session()
         payload = {
             'username': self.username,
             'password': self.password
         }
 
         # login
-        r = s.post(self.login_url, data=payload)
+        session.post(self.login_url, data=payload)
 
-        # make one week long requests only
-        for i in range(0, self.n_weeks):
-            # craft url
-            dtstart = datetime.today() + timedelta(weeks=i)
-            dtdelta = timedelta(days=7)
-            dtend = dtstart + dtdelta
+        # craft url
+        dtstart = datetime.today()
+        dtdelta = timedelta(days=(7 * self.n_weeks))
+        dtend = dtstart + dtdelta
 
-            start = dtstart.strftime('%s')
-            end = dtend.strftime('%s')
+        start = dtstart.strftime('%s')
+        end = dtend.strftime('%s')
 
-            url = self.events_url + '?&start=' + start + '&end=' + end
+        url = self.events_url + '?&start=' + start + '&end=' + end
 
-            # get data
-            r = s.get(url)
-            text = r.text
+        # get data
+        response = session.get(url)
 
-            # convert to python list
-            try:
-                data = json.loads(text)
-            except ValueError:
-                return res
-            res = res + data
-
-        return res
+        # convert to python list
+        try:
+            data = json.loads(response.text)
+        except ValueError:
+            return []
+        return data
 
     def add_event(self, e):
         event = Event()
@@ -91,3 +88,18 @@ class Calendar(iCalendar):
 
     def display(self):
         return self.to_ical().replace('\n\r', '\n').strip()
+
+
+def main():
+    import sys
+    try:
+        n = int(sys.argv[1])
+    except (IndexError, ValueError):
+        n = 1
+
+    cal = Calendar(n)
+    cal.update()
+    print(cal.display())
+
+if __name__ == "__main__":
+    main()
