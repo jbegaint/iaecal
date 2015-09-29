@@ -6,11 +6,16 @@ from events import Calendar
 from flask import Flask, request
 app = Flask(__name__)
 
+ENV_VARS = [
+    'CAL_EVENTS_URL',
+    'CAL_LOGIN_URL',
+    'CAL_PASSWORD',
+    'CAL_USERNAME',
+]
+
 
 def is_env_conf_valid():
-    variables = ['CAL_LOGIN_URL', 'CAL_EVENTS_URL', 'CAL_USERNAME',
-                 'CAL_PASSWORD']
-    for v in variables:
+    for v in ENV_VARS:
         if os.environ.get(v) is None:
             return False
     return True
