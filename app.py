@@ -12,7 +12,7 @@ ENV_VARS = [
     'CAL_PASSWORD',
     'CAL_USERNAME',
 ]
-N_WEEKS = 1
+N_WEEKS = 6
 
 
 def is_env_conf_valid():
