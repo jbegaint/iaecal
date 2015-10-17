@@ -1,0 +1,106 @@
+/* http://css-tricks.com/perfect-full-page-background-image/ */
+html {
+}
+
+body {
+	padding-top: 50px;
+	font-size: 18px;
+	font-family: serif;
+	background: transparent;
+}
+
+.container:before {
+	content: '';
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+	display: block;
+	background: url('/static/img/grenoble.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	-webkit-filter: blur(5px);
+	-moz-filter: blur(5px);
+	-o-filter: blur(5px);
+	-ms-filter: blur(5px);
+	filter: blur(5px);
+}
+
+.panel {
+	padding: 20px 30px;
+	color: #fff;
+	border: none;
+	background-color: rgba(120,120,120,0.55);
+}
+
+.panel-default {
+	margin-top: 5%;
+}
+
+.panel h1 {
+	margin-top: 30px;
+	margin-bottom: 20px;
+
+	text-align: center;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+.panel p {
+	color: #ffffff;
+}
+
+.panel form,
+.panel p.help-block {
+	margin-top: 20px;
+}
+
+
+.panel .form-control {
+	border-radius: 0;
+	height: 50px;
+	border: 1px solid #bbb;
+	font-size: 18px;
+}
+
+.panel .form-group.has-error .help-block {
+	color: #fc0000;
+	font-weight: bold;
+}
+
+.btn-url {
+	outline: none !important;
+	background-color: rgb(99, 164, 207);
+	border-color: #63a4cf;
+	box-shadow: 0 1px 1px -1px #2B2B2B;
+	border-radius: 3px;
+	font-weight: bold;
+}
+
+.btn-url:active,
+.btn-url:focus,
+.btn-url:hover {
+	background-color: #63a4cf !important;
+	border-color: #63a4cf !important;
+}
+
+.btn-url.disabled {
+	background-color: #63a4cf;
+	border-color: #63a4cf;
+}
+
+.cal-url {
+	word-wrap: break-word;
+	color: #fff !important;
+	display: block;
+	padding: 10px;
+	border-radius: 5px;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.3);
+}
