@@ -17,10 +17,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 panel panel-default">
-					<h1>Agenda IAE</h1>
+					<h1>{{ _("IAE Calendar") }}</h1>
 					<p class="text-center">
-					Obtenir un lien pour synchroniser votre calendrier IAE avec
-					une application de calendrier ou Google Calendar.
+						{{ _("Get a link to synchronise your IAE agenda to Google Calendar.") }}
 					</p>
 					<form name="form" role="form" ng-submit="submitForm()"
 						novalidate ngCloak>
@@ -28,12 +27,11 @@
 						{{ render_field(form.password) }}
 
 						<p class="help-block text-center">
-							Votre identifiant et mot de passe ne seront pas
-							stockés en clair dans la base de donnée.
+							{{ _("Your username and password are stored encrypted in the database.") }}
 						</p>
 						<p class="text-center">
 						<button class="btn btn-success btn-lg btn-url" type="submit" ng-class="{'disabled': showUrl }">
-								Obtenir l'url
+							{{ _("Obtenir l'url") }}
 							</button>
 						</p>
 					</form>
@@ -44,8 +42,7 @@
 
 				<div class="col-md-6 col-md-offset-3 panel" ng-show="(showUrl)">
 					<p class="help-block text-center">
-						Copier-Coller cette url dans votre agenda Google
-						pour synchroniser vos cours:
+						{{ _("Copy past this link in Google Calender to synchronise your events:") }}
 					</p>
 					<a class="cal-url" href="{{ '{{ serverData.url }}' }}">
 						{{ '{{ serverData.url }}' }}

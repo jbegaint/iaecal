@@ -1,0 +1,61 @@
+# French translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-10-21 12:24+0200\n"
+"PO-Revision-Date: 2015-10-21 11:49+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+#: iaecal/forms.py:13
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: iaecal/forms.py:18
+msgid "Password"
+msgstr "Mot de passe"
+
+#: iaecal/templates/index.html:20
+msgid "IAE Calendar"
+msgstr "Agenda IAE"
+
+#: iaecal/templates/index.html:22
+msgid "Get a link to synchronise your IAE agenda to Google Calendar."
+msgstr ""
+
+#: iaecal/templates/index.html:30
+msgid "Your username and password are stored encrypted in the database."
+msgstr ""
+
+#: iaecal/templates/index.html:34
+msgid "Obtenir l'url"
+msgstr ""
+
+#: iaecal/templates/index.html:45
+msgid "Copy past this link in Google Calender to synchronise your events:"
+msgstr ""
+
+#~ msgid ""
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Obtenir un lien pour synchroniser votre calendrier IAE avec\n"
+#~ "\t\t\t\t\t\tune application de calendrier ou Google Calendar."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Votre identifiant et mot de passe ne seront pas\n"
+#~ "\t\t\t\t\t\t\tstockés en clair dans la base de donnée."
+#~ msgstr ""
+

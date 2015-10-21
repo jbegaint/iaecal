@@ -6,7 +6,7 @@ from cryptography.fernet import Fernet, InvalidToken
 from flask_wtf.csrf import CsrfProtect
 import wtforms_json
 
-from iaecal import app, db
+from iaecal import app, db, babel
 from events import Calendar
 from models import Credentials
 from forms import UserInfoForm
@@ -36,6 +36,11 @@ class FernetCypher(object):
         if not isinstance(enc, bytes):
             enc = bytes(enc)
         return f.decrypt(enc)
+
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(app.config['ACCEPT_LANGUAGES'])
 
 
 @app.route("/", methods=['GET'])
