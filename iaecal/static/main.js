@@ -1,10 +1,10 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('IAECalApp', []);
+	var app = angular.module('IAECalApp', ['angularSpinner']);
 
-	app.controller('IAECalController',	['$scope', '$log', '$http',
-			function($scope, $log, $http) {
+	app.controller('IAECalController',	['$scope', '$http', '$timeout', 'usSpinnerService',
+			function($scope, $http, $timeout, usSpinnerService) {
 				// Take care of the CSRF protection
 				var csrftoken = angular.element('meta[name=csrf-token]').attr('content');
 				$http.defaults.headers.post['X-CSRFToken'] = csrftoken;
@@ -23,24 +23,28 @@
 					// Init requested data
 					$scope.serverData = {};
 
+					usSpinnerService.spin('spinner-form');
+
 					$http.post('/toto', {
 						'username': $scope.username,
 						'password': $scope.password,
-					}).
-					success(function(data) {
+					}).success(function(data) {
 						angular.forEach(data, function(value, field) {
 							$scope.serverData[field] = value;
 						});
 						$scope.showUrl = true;
-					}).
-					error(function(data) {
+					}).error(function(data) {
 						angular.forEach(data.errors, function(errors, field) {
 							// field is invalid
 							$scope.form[field].$setValidity('server', false);
 
 							// display server error messages
-							$scope.errors[field] = errors.join(', ')
+							$scope.errors[field] = errors.join(', ');
 						});
+					}).finally(function() {
+						$timeout(function() {
+							usSpinnerService.stop('spinner-form');
+						}, 100);
 					});
 				};
 			}
