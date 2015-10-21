@@ -3,6 +3,12 @@
 
 	var app = angular.module('IAECalApp', ['angularSpinner']);
 
+	// Compatibility with jinja2 templates
+	app.config(['$interpolateProvider', function($interpolateProvider) {
+		$interpolateProvider.startSymbol('{a');
+		$interpolateProvider.endSymbol('a}');
+	}]);
+
 	app.controller('IAECalController',	['$scope', '$http', '$timeout', 'usSpinnerService',
 			function($scope, $http, $timeout, usSpinnerService) {
 				// Take care of the CSRF protection

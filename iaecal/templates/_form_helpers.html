@@ -6,7 +6,7 @@
 
 		<ul ng-show="(form.{{ field.name }}.$dirty && form.{{ field.name }}.$invalid) || form.{{ field.name }}.$pristine">
 			<li ng-show="form.{{ field.name }}.$error.server">
-				<span class="help-block">{{ '{{ errors' }}.{{ field.name }}{{ ' }}' }}</span>
+				<span class="help-block">{a errors.{{ field.name }} a}</span>
 			</li>
 		</ul>
 	</div>
