@@ -15,3 +15,36 @@ babel = Babel(app)
 db = SQLAlchemy(app)
 
 import iaecal.views
+
+# Logging
+if not app.debug:
+    import logging
+    from logging.handlers import SMTPHandler
+    from logging import StreamHandler
+
+    # Configure mail logging for error and critical messages
+    mail_handler = SMTPHandler(
+        (app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
+        app.config['MAIL_DEFAULT_SENDER'],
+        app.config['MAIL_ADMINS'],
+        'IAECal Failed',
+        credentials=(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']),
+    )
+    mail_handler.setLevel(logging.ERROR)
+    base_dir = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(base_dir, 'mail_handler_format.txt')) as f:
+        mail_handler.setFormatter(logging.Formatter(f.read()))
+
+    # Configure stderr logging for warning messages
+    stream_handler = StreamHandler()
+    stream_handler.setLevel(logging.WARNING)
+    stream_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s '
+        '[in %(pathname)s:%(lineno)d]'
+    ))
+
+    # Configure logging for the app and libraries
+    loggers = [app.logger, logging.getLogger('sqlalchemy')]
+    for logger in loggers:
+        logger.addHandler(mail_handler)
+        logger.addHandler(stream_handler)
