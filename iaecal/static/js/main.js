@@ -31,7 +31,7 @@
 
 					usSpinnerService.spin('spinner-form');
 
-					$http.post('/toto', {
+					$http.post('/get-url', {
 						'username': $scope.username,
 						'password': $scope.password,
 					}).success(function(data) {

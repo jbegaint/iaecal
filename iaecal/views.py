@@ -50,8 +50,8 @@ def index():
     return render_template('index.html', form=form)
 
 
-@app.route("/toto", methods=['POST'])
-def toto():
+@app.route("/get-url", methods=['POST'])
+def get_url():
     form = UserInfoForm.from_json(request.json)
     if form.validate():
         # Get the form data
