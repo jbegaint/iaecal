@@ -41,12 +41,11 @@ class IAECalTestCase(unittest.TestCase):
                               content_type='application/json')
         assert rv.status_code == 400
 
-        # Test response on valid request
+        # Test invalid credentials
         data = {'username': 'foo', 'password': 'bar'}
         rv = self.client.post(url, data=json.dumps(data),
                               content_type='application/json')
-        assert rv.status_code == 200
-        assert 'url' in json.loads(rv.get_data())
+        assert rv.status_code == 400
 
     def test_events(self):
         # Test missing parameters
@@ -62,14 +61,6 @@ class IAECalTestCase(unittest.TestCase):
         # Test invalid parameters
         rv = self.client.get('/events/?session_id=foo&key=bar')
         assert rv.status_code == 404
-
-        # Test valid parameters
-        data = {'username': 'foo', 'password': 'bar'}
-        rv = self.client.post('/get-url', data=json.dumps(data),
-                              content_type='application/json')
-        url = json.loads(rv.get_data())['url']
-        rv = self.client.get('/events/' + url.split('/')[-1])
-        assert rv.status_code == 200
 
 if __name__ == '__main__':
     unittest.main()
