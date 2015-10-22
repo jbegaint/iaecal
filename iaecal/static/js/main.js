@@ -3,18 +3,18 @@
 
 	var app = angular.module('IAECalApp', ['angularSpinner']);
 
-	// Compatibility with jinja2 templates
-	app.config(['$interpolateProvider', function($interpolateProvider) {
+	app.config(['$interpolateProvider', '$httpProvider', function($interpolateProvider, $httpProvider) {
+		// Compatibility with jinja2 templates
 		$interpolateProvider.startSymbol('{a');
 		$interpolateProvider.endSymbol('a}');
+		
+		// Take care of the CSRF protection
+		$httpProvider.defaults.xsrfCookieName = 'csrftoken';
+		$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 	}]);
 
 	app.controller('IAECalController',	['$scope', '$http', '$timeout', 'usSpinnerService',
 			function($scope, $http, $timeout, usSpinnerService) {
-				// Take care of the CSRF protection
-				var csrftoken = angular.element('meta[name=csrf-token]').attr('content');
-				$http.defaults.headers.post['X-CSRFToken'] = csrftoken;
-
 				// Clean up errors
 				$scope.errors = {};
 

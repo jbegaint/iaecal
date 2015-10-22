@@ -4,17 +4,18 @@ import datetime
 from os import urandom
 from flask import request, render_template, url_for, abort, jsonify
 from cryptography.fernet import Fernet, InvalidToken
-from flask_wtf.csrf import CsrfProtect
 import wtforms_json
 
-from iaecal import app, db, babel
+from iaecal import db, babel
 from events import Calendar
 from models import Credentials
 from forms import UserInfoForm
 
+from flask import Blueprint, current_app
+bp = Blueprint('bp', __name__)
+
 SESSION_ID_LENGTH = 16
 
-CsrfProtect(app)
 wtforms_json.init()
 
 
@@ -48,16 +49,17 @@ class FernetCypher(object):
 
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(app.config['ACCEPT_LANGUAGES'])
+    return request.accept_languages.best_match(
+        current_app.config['ACCEPT_LANGUAGES'])
 
 
-@app.route("/", methods=['GET'])
+@bp.route("/", methods=['GET'])
 def index():
     form = UserInfoForm()
     return render_template('index.html', form=form)
 
 
-@app.route("/get-url", methods=['POST'])
+@bp.route("/get-url", methods=['POST'])
 def get_url():
     form = UserInfoForm.from_json(request.json)
     if form.validate():
@@ -87,7 +89,7 @@ def get_url():
         # Prepare the url to be returned
         key = key_part1.encode('hex')
         url = "{}?session_id={}&key={}".format(
-            url_for('events', _external=True),
+            url_for('bp.events', _external=True),
             session_id,
             key
         )
@@ -95,7 +97,7 @@ def get_url():
     return jsonify(errors=form.errors), 400
 
 
-@app.route("/events/", methods=['GET'])
+@bp.route("/events/", methods=['GET'])
 def events():
     session_id = request.args.get('session_id', None)
     key = request.args.get('key', None)

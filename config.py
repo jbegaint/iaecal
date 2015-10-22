@@ -19,6 +19,18 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD', None)
     MAIL_ADMINS = ['jean.begaint@gmail.com']
 
+    # Flask-SeaSurf
+    CSRF_COOKIE_NAME = 'csrftoken'
+
+    # Flask-Wtforms
+    WTF_CSRF_ENABLED = False
+
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    ASSETS_DEBUG = True
+
+
+class TestingConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
