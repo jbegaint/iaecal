@@ -19,7 +19,14 @@ wtforms_json.init()
 
 
 def get_session_id():
-    return urandom(SESSION_ID_LENGTH).encode('hex')
+    session_id = urandom(SESSION_ID_LENGTH).encode('hex')
+    credentials = Credentials.query.filter_by(session_id=session_id).first()
+
+    # In case a session with that id is already registered...
+    if credentials is not None:
+        # Try another session_id
+        return get_session_id()
+    return session_id
 
 
 class FernetCypher(object):
