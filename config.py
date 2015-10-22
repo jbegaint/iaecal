@@ -15,8 +15,8 @@ class Config(object):
     MAIL_SERVER = "smtp.sendgrid.net"
     MAIL_PORT = 587
     MAIL_DEFAULT_SENDER = "server-error@iaecal.herokuapp.com"
-    MAIL_USERNAME = os.environ['MAIL_USERNAME']
-    MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME', None)
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD', None)
     MAIL_ADMINS = ['jean.begaint@gmail.com']
 
 
