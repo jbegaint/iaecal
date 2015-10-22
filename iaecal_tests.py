@@ -7,7 +7,6 @@ from iaecal import create_app, db
 
 
 class IAECalTestCase(unittest.TestCase):
-
     def setUp(self):
         self.app = create_app('config.TestingConfig')
         self.app_context = self.app.app_context()
