@@ -1,5 +1,6 @@
 # views.py
 
+import datetime
 from os import urandom
 from flask import request, render_template, url_for, abort, jsonify
 from cryptography.fernet import Fernet, InvalidToken
@@ -89,14 +90,15 @@ def toto():
 
 @app.route("/events/", methods=['GET'])
 def events():
-    session_id = request.args.get('session_id')
-    key = request.args.get('key')
+    session_id = request.args.get('session_id', None)
+    key = request.args.get('key', None)
 
     if not session_id or not key:
         abort(404)
 
     credentials = Credentials.query.filter_by(session_id=session_id).first()
 
+    # Try to decrypt the credentials for the session_id with the provided key
     try:
         key = "{}{}".format(credentials.key, key.decode('hex'))
         f = FernetCypher(key)
@@ -105,6 +107,11 @@ def events():
     except (TypeError, InvalidToken):
         abort(404)
 
+    # Update stats
+    credentials.last_used_on = datetime.datetime.utcnow()
+    db.session.commit()
+
+    # Get and parse the calendar data
     try:
         ics = Calendar(username, password).update().display()
     except ValueError:

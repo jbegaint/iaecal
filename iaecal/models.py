@@ -1,5 +1,7 @@
 # models.py
 
+import datetime
+
 from iaecal import db
 
 
@@ -10,6 +12,8 @@ class Credentials(db.Model):
     username = db.Column(db.String())
     password = db.Column(db.String())
     key = db.Column(db.String())
+    registered_on = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    last_used_on = db.Column(db.DateTime)
 
     def __init__(self, session_id, key, username, password):
         self.session_id = session_id
