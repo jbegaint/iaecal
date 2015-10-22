@@ -34,12 +34,14 @@
 					$http.post('/get-url', {
 						'username': $scope.username,
 						'password': $scope.password,
-					}).success(function(data) {
+					}).
+					success(function(data) {
 						angular.forEach(data, function(value, field) {
 							$scope.serverData[field] = value;
 						});
 						$scope.showUrl = true;
-					}).error(function(data) {
+					}).
+					error(function(data) {
 						angular.forEach(data.errors, function(errors, field) {
 							// field is invalid
 							$scope.form[field].$setValidity('server', false);
@@ -47,7 +49,8 @@
 							// display server error messages
 							$scope.errors[field] = errors.join(', ');
 						});
-					}).finally(function() {
+					}).
+					finally(function() {
 						$timeout(function() {
 							usSpinnerService.stop('spinner-form');
 						}, 100);
