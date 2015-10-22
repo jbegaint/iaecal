@@ -2,16 +2,18 @@
 
 import datetime
 from os import urandom
-from flask import request, render_template, url_for, abort, jsonify
+
 from cryptography.fernet import Fernet, InvalidToken
+from flask import request, render_template, url_for, abort, jsonify
+from flask import Blueprint, current_app
 import wtforms_json
 
-from iaecal import db, babel
 from events import Calendar
-from models import Credentials
 from forms import UserInfoForm
+from iaecal import db, babel
+from models import Credentials
+from utils import FernetCypher
 
-from flask import Blueprint, current_app
 bp = Blueprint('bp', __name__)
 
 SESSION_ID_LENGTH = 16
@@ -23,28 +25,11 @@ def get_session_id():
     session_id = urandom(SESSION_ID_LENGTH).encode('hex')
     credentials = Credentials.query.filter_by(session_id=session_id).first()
 
-    # In case a session with that id is already registered...
+    # In case a session with this id is already registered...
     if credentials is not None:
-        # Try another session_id
+        # let's another session_id
         return get_session_id()
     return session_id
-
-
-class FernetCypher(object):
-    def __init__(self, key):
-        self.key = key
-
-    def encrypt(self, secret):
-        f = Fernet(self.key)
-        if not isinstance(secret, bytes):
-            secret = bytes(secret)
-        return f.encrypt(secret)
-
-    def decrypt(self, enc):
-        f = Fernet(self.key)
-        if not isinstance(enc, bytes):
-            enc = bytes(enc)
-        return f.decrypt(enc)
 
 
 @babel.localeselector
