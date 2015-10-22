@@ -13,11 +13,8 @@
 		$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 	}]);
 
-	app.controller('IAECalController',	['$scope', '$http', '$timeout', 'usSpinnerService',
-			function($scope, $http, $timeout, usSpinnerService) {
-				// Clean up errors
-				$scope.errors = {};
-
+	app.controller('IAECalController',	['$scope', '$http', 'usSpinnerService',
+			function($scope, $http, usSpinnerService) {
 				// Nothing to show at first
 				$scope.showUrl = false;
 
@@ -28,7 +25,7 @@
 
 					// Init requested data
 					$scope.serverData = {};
-
+				
 					usSpinnerService.spin('spinner-form');
 
 					$http.post('/get-url', {
@@ -42,18 +39,22 @@
 						$scope.showUrl = true;
 					}).
 					error(function(data) {
+						// Clean up errors
+						$scope.errors = {};
+
+						// Parse response
 						angular.forEach(data.errors, function(errors, field) {
-							// field is invalid
-							$scope.form[field].$setValidity('server', false);
+							if ($scope.form.hasOwnProperty(field)) {
+								// mark field invalid
+								$scope.form[field].$setValidity('server', false);
+							}
 
 							// display server error messages
 							$scope.errors[field] = errors.join(', ');
 						});
 					}).
 					finally(function() {
-						$timeout(function() {
-							usSpinnerService.stop('spinner-form');
-						}, 100);
+						usSpinnerService.stop('spinner-form');
 					});
 				};
 			}

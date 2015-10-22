@@ -105,9 +105,9 @@ def events():
     if not session_id or not key:
         abort(404)
 
-    credentials = Credentials.query.filter_by(session_id=session_id).first()
-    if not credentials:
-        abort(404)
+    credentials = Credentials.query.filter_by(
+        session_id=session_id
+    ).first_or_404()
 
     # Try to decrypt the credentials for the session_id with the provided key
     try:

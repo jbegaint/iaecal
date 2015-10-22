@@ -27,17 +27,20 @@
 					<p class="text-center">
 						{{ _("Get a link to synchronise your IAE agenda to Google Calendar.") }}
 					</p>
-					<form name="form" role="form" ng-submit="submitForm()"
-						novalidate ngCloak>
+					<form name="form" role="form" ng-submit="submitForm()" novalidate ngCloak>
 						{{ render_field(form.username) }}
 						{{ render_field(form.password) }}
+
+						<div class="form-group" name="non_field_errors" ng-model="non_field_errors" ng-show="form.non_field_errors.$error.server" ng-class="{'has-error': form.non_field_errors.$invalid}">
+							<span class="help-block text-center">{a errors.non_field_errors a}</span>
+						</div>
 
 						<p class="help-block text-center">
 							{{ _("Your username and password are stored encrypted in the database.") }}
 						</p>
 						<p class="text-center">
-						<button class="btn btn-success btn-lg btn-url" type="submit" ng-class="{'disabled': showUrl }">
-							{{ _("Obtenir l'url") }}
+							<button class="btn btn-success btn-lg btn-url" type="submit" ng-class="{'disabled': showUrl }">
+								{{ _("Obtenir l'url") }}
 							</button>
 						</p>
 					</form>

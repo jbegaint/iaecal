@@ -8,8 +8,8 @@ from flask.ext.babel import Babel
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.seasurf import SeaSurf
 
-# app = Flask(__name__)
-# app.config.from_object(os.environ['APP_SETTINGS'])
+from iaecal.serializers import JSONEncoder
+
 
 assets = Environment()
 babel = Babel()
@@ -26,14 +26,18 @@ def create_app(config_object=os.environ['APP_SETTINGS']):
     db.init_app(app)
     csrf.init_app(app)
 
+    # Register blueprints
     from iaecal.views import bp
-
     app.register_blueprint(bp)
 
     with app.app_context():
         db.create_all()
 
+    # Set up logging
     setup_logging(app)
+
+    # Update app json encoder
+    app.json_encoder = JSONEncoder
 
     return app
 
