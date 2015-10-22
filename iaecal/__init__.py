@@ -39,34 +39,36 @@ def create_app(config_object=os.environ['APP_SETTINGS']):
 
 
 def setup_logging(app):
-    if not app.debug:
-        import logging
-        from logging.handlers import SMTPHandler
-        from logging import StreamHandler
+    if app.debug:
+        return
 
-        # Configure mail logging for error and critical messages
-        mail_handler = SMTPHandler(
-            (app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
-            app.config['MAIL_DEFAULT_SENDER'],
-            app.config['MAIL_ADMINS'],
-            'IAECal Failed',
-            credentials=(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']),
-        )
-        mail_handler.setLevel(logging.ERROR)
-        base_dir = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(base_dir, 'mail_handler_format.txt')) as f:
-            mail_handler.setFormatter(logging.Formatter(f.read()))
+    import logging
+    from logging.handlers import SMTPHandler
+    from logging import StreamHandler
 
-        # Configure stderr logging for warning messages
-        stream_handler = StreamHandler()
-        stream_handler.setLevel(logging.WARNING)
-        stream_handler.setFormatter(logging.Formatter(
-            '%(asctime)s %(levelname)s: %(message)s '
-            '[in %(pathname)s:%(lineno)d]'
-        ))
+    # Configure mail logging for error and critical messages
+    mail_handler = SMTPHandler(
+        (app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
+        app.config['MAIL_DEFAULT_SENDER'],
+        app.config['MAIL_ADMINS'],
+        'IAECal Failed',
+        credentials=(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']),
+    )
+    mail_handler.setLevel(logging.ERROR)
+    base_dir = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(base_dir, 'mail_handler_format.txt')) as f:
+        mail_handler.setFormatter(logging.Formatter(f.read()))
 
-        # Configure logging for the app and libraries
-        loggers = [app.logger, logging.getLogger('sqlalchemy')]
-        for logger in loggers:
-            logger.addHandler(mail_handler)
-            logger.addHandler(stream_handler)
+    # Configure stderr logging for warning messages
+    stream_handler = StreamHandler()
+    stream_handler.setLevel(logging.WARNING)
+    stream_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s '
+        '[in %(pathname)s:%(lineno)d]'
+    ))
+
+    # Configure logging for apps and libraries
+    loggers = [app.logger, logging.getLogger('sqlalchemy')]
+    for logger in loggers:
+        logger.addHandler(mail_handler)
+        logger.addHandler(stream_handler)

@@ -37,30 +37,39 @@ class IAECalTestCase(unittest.TestCase):
 
         # Test invalid data
         data = {'username': 'foo', 'password1': 'bar'}
-        rv = self.client.post(url, data=data, content_type='clientlication/json')
+        rv = self.client.post(url, data=data,
+                              content_type='application/json')
         assert rv.status_code == 400
 
         # Test response on valid request
         data = {'username': 'foo', 'password': 'bar'}
-        rv = self.client.post(url, data=json.dumps(data), content_type='application/json')
+        rv = self.client.post(url, data=json.dumps(data),
+                              content_type='application/json')
         assert rv.status_code == 200
         assert 'url' in json.loads(rv.get_data())
 
     def test_events(self):
         # Test missing parameters
-        rv = self.client.get('/event/')
+        rv = self.client.get('/events/')
         assert rv.status_code == 404
 
-        rv = self.client.get('/event/?session_id=toto')
+        rv = self.client.get('/events/?session_id=toto')
         assert rv.status_code == 404
 
-        rv = self.client.get('/event/?key=toto')
+        rv = self.client.get('/events/?key=toto')
         assert rv.status_code == 404
 
         # Test invalid parameters
-        rv = self.client.get('/event/?session_id=foo&key=bar')
+        rv = self.client.get('/events/?session_id=foo&key=bar')
         assert rv.status_code == 404
 
+        # Test valid parameters
+        data = {'username': 'foo', 'password': 'bar'}
+        rv = self.client.post('/get-url', data=json.dumps(data),
+                              content_type='application/json')
+        url = json.loads(rv.get_data())['url']
+        rv = self.client.get('/events/' + url.split('/')[-1])
+        assert rv.status_code == 200
 
 if __name__ == '__main__':
     unittest.main()
