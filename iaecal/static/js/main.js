@@ -33,6 +33,9 @@
 						'password': $scope.password,
 					}).
 					success(function(data) {
+						// Clean up errors
+						$scope.errors = {};
+
 						angular.forEach(data, function(value, field) {
 							$scope.serverData[field] = value;
 						});
