@@ -26,6 +26,10 @@ class Config(object):
     WTF_CSRF_ENABLED = False
 
 
+class ProductionConfig(Config):
+    pass
+
+
 class DevelopmentConfig(Config):
     DEBUG = True
     ASSETS_DEBUG = True
