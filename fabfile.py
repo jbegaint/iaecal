@@ -21,3 +21,8 @@ def babel():
     local('pybabel update -i messages.pot -d iaecal/translations -l fr')
     # Compile the translations
     local('pybabel compile -d iaecal/translations')
+
+
+def test():
+    """Test the application."""
+    local('python2 iaecal_tests.py')
