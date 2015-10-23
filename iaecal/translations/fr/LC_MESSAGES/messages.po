@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-10-22 19:29+0200\n"
-"PO-Revision-Date: 2015-10-21 11:49+0200\n"
+"POT-Creation-Date: 2015-10-23 12:17+0200\n"
+"PO-Revision-Date: 2015-10-23 12:16+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -18,33 +18,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
 
-#: iaecal/forms.py:14
+#: iaecal/forms.py:30
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: iaecal/forms.py:19
+#: iaecal/forms.py:35
 msgid "Password"
 msgstr "Mot de passe"
 
-#: iaecal/forms.py:30
+#: iaecal/forms.py:47
 msgid "Invalid username or password"
+msgstr "Nom d'utilisateur ou mot de passe invalide"
+
+#: iaecal/templates/index.html:26
+msgid "IAE Calendar"
+msgstr "Agenda IAE"
+
+#: iaecal/templates/index.html:28
+msgid "Get a link to synchronise your IAE agenda to Google Calendar."
 msgstr ""
 
-#~ msgid ""
-#~ msgstr ""
+#: iaecal/templates/index.html:39
+msgid "Your username and password are stored encrypted in the database."
+msgstr ""
 
-#~ msgid "IAE Calendar"
-#~ msgstr "Agenda IAE"
+#: iaecal/templates/index.html:43
+msgid "Get the url"
+msgstr ""
 
-#~ msgid "Get a link to synchronise your IAE agenda to Google Calendar."
-#~ msgstr ""
-
-#~ msgid "Your username and password are stored encrypted in the database."
-#~ msgstr ""
-
-#~ msgid "Obtenir l'url"
-#~ msgstr ""
-
-#~ msgid "Copy past this link in Google Calender to synchronise your events:"
-#~ msgstr ""
+#: iaecal/templates/index.html:54
+msgid "Copy past this link in Google Calender to synchronise your events:"
+msgstr ""
 
