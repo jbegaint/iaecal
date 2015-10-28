@@ -30,13 +30,10 @@ def test():
     local('python2 iaecal_tests.py')
 
 
-def deploy():
-    """Deploy the application on heroku."""
+def deploy_setenv():
+    """Set application settings on heroku."""
     # maintenance on
     local('heroku maintenance:on')
-
-    # push local changes
-    local('git push heroku master')
 
     # set environment variables
     config_dict = {
@@ -52,6 +49,24 @@ def deploy():
     )
 
     local('heroku config:set %s' % config)
+
+    # maintenance off
+    local('heroku maintenance:off')
+
+
+def deploy():
+    """Deploy the application on heroku."""
+    # maintenance on
+    local('heroku maintenance:on')
+
+    # push local changes
+    local('git push heroku master')
+
+    # run assets building
+    local('heroku run python2 manage.py assets --parse-templates build')
+
+    # upgrade database
+    local('heroku run python2 manage.py db upgrade')
 
     # maintenance off
     local('heroku maintenance:off')
