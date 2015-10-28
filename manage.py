@@ -1,13 +1,11 @@
 #!/usr/bin/env python2
 
-import os
-
 from flask.ext.assets import ManageAssets
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 
-from iaecal import app, db
-app.config.from_object(os.environ['APP_SETTINGS'])
+from iaecal import create_app, db
+app = create_app()
 
 from iaecal.models import *
 
