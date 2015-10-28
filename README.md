@@ -1,7 +1,8 @@
-# iaecal
-Workaround to get a google calendar compatible link from a FullCalendar events
-source.
+# IAECal 
 
-Build with flask, requests and icalendar as a quick week-end project.
+Use a web application as a workaround to get a google calendar compatible link 
+(ics format) from a FullCalendar JSON events source (requiring authentication).
 
-Untested and probably buggy, but fits my needs for now.
+Build with [flask](http://flask.pocoo.org/), 
+[requests](http://docs.python-requests.org/en/latest/) and 
+[icalendar](https://github.com/collective/icalendar/).
