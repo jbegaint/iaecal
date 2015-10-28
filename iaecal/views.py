@@ -18,6 +18,7 @@ bp = Blueprint('bp', __name__)
 
 SESSION_ID_LENGTH = 16
 
+# Monkey-patching Wtforms for JSON support
 wtforms_json.init()
 
 
@@ -27,7 +28,7 @@ def get_session_id():
 
     # In case a session with this id is already registered...
     if credentials is not None:
-        # let's another session_id
+        # let's create another session_id
         return get_session_id()
     return session_id
 

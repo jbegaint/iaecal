@@ -7,7 +7,7 @@ from speaklater import _LazyString
 class JSONEncoder(BaseEncoder):
     """
     Custom JSONEncoder for encoding json data.
-    Necessary when returning translated data via jsonify or flashing it.
+    Necessary when returning translated data via jsonify or flash messages.
     """
     def default(self, o):
         if isinstance(o, _LazyString):

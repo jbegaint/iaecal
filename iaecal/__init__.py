@@ -36,7 +36,7 @@ def create_app(config_object=os.environ['APP_SETTINGS']):
     # Set up logging
     setup_logging(app)
 
-    # Update app json encoder
+    # Set a specific json encoder
     app.json_encoder = JSONEncoder
 
     return app
