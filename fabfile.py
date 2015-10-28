@@ -42,7 +42,8 @@ def deploy_setenv():
         'CAL_EVENTS_URL': os.environ.get('CAL_EVENTS_URL'),
         'CAL_LOGIN_URL': os.environ.get('CAL_LOGIN_URL'),
         'MAIL_USERNAME': os.environ.get('MAIL_USERNAME'),
-        'MAIL_PASSWORD': os.environ.get('MAIL_PASSWORD')
+        'MAIL_PASSWORD': os.environ.get('MAIL_PASSWORD'),
+        'DISABLE_COLLECTSTATIC': 1,
     }
     config = ' '.join(
         "%s=\"%s\"" % (k, v) for (k, v) in config_dict.iteritems()
