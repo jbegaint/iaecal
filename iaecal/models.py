@@ -6,7 +6,7 @@ from iaecal import db
 
 
 class Credentials(db.Model):
-    __tablename__ = 'Credentials'
+    __tablename__ = 'credentials'
 
     session_id = db.Column(db.String(), primary_key=True, unique=True)
     username = db.Column(db.String())
