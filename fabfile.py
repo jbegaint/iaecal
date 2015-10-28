@@ -1,6 +1,7 @@
 # fabfile.py
 
 from fabric.api import *
+from base64 import b64encode
 import os
 
 
@@ -32,21 +33,25 @@ def test():
 def deploy():
     """Deploy the application on heroku."""
     # maintenance on
-    local('heroku maintenance on')
+    local('heroku maintenance:on')
 
     # push local changes
     local('git push heroku master')
 
     # set environment variables
-    local('heroku config:set APP_SETTINGS:config.ProductionConfig')
+    config_dict = {
+        'APP_SETTINGS': 'config.ProductionConfig',
+        'SECRET_KEY': b64encode(os.urandom(24)),
+        'CAL_EVENTS_URL': os.environ.get('CAL_EVENTS_URL'),
+        'CAL_LOGIN_URL': os.environ.get('CAL_LOGIN_URL'),
+        'MAIL_USERNAME': os.environ.get('MAIL_USERNAME'),
+        'MAIL_PASSWORD': os.environ.get('MAIL_PASSWORD')
+    }
+    config = ' '.join(
+        "%s=\"%s\"" % (k, v) for (k, v) in config_dict.iteritems()
+    )
 
-    secret_key = os.urandom(24)
-    local('heroku config:set SECRET_KEY:%s' % secret_key)
-
-    env_vars = ['CAL_EVENTS_URL', 'CAL_LOGIN_URL', 'MAIL_USERNAME',
-                'MAIL_PASSWORD']
-    for v in env_vars:
-        local('heroku config:set %s:%s' % (v, os.environ.get(v)))
+    local('heroku config:set %s' % config)
 
     # maintenance off
-    local('heroku maintenance off')
+    local('heroku maintenance:off')
