@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-10-23 12:17+0200\n"
+"POT-Creation-Date: 2015-10-24 19:02+0200\n"
 "PO-Revision-Date: 2015-10-23 12:16+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -32,21 +32,23 @@ msgstr "Nom d'utilisateur ou mot de passe invalide"
 
 #: iaecal/templates/index.html:26
 msgid "IAE Calendar"
-msgstr "Agenda IAE"
+msgstr "Emploi du temps IAE"
 
 #: iaecal/templates/index.html:28
 msgid "Get a link to synchronise your IAE agenda to Google Calendar."
-msgstr ""
+msgstr "Obtenir un lien pour synchroniser son agenda IAE avec Google Calendar."
 
 #: iaecal/templates/index.html:39
 msgid "Your username and password are stored encrypted in the database."
 msgstr ""
+"Identifiant et mot de passe ne sont pas enregistrés en clair dans la base"
+" de donnée."
 
 #: iaecal/templates/index.html:43
 msgid "Get the url"
-msgstr ""
+msgstr "Obtenir le lien"
 
 #: iaecal/templates/index.html:54
 msgid "Copy past this link in Google Calender to synchronise your events:"
-msgstr ""
+msgstr "Copier Coller ce lien pour l'utiliser avec Google Calendar:"
 
