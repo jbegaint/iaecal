@@ -5,6 +5,8 @@
   "dependencies": {
     "angular": "angularjs#~1.4.7",
     "bootstrap": "~3.3.5",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "spin.js": "~2.3.2",
+    "angular-spinner": "~0.7.0"
   }
 }
