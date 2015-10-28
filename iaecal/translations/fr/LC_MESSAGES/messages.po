@@ -1,0 +1,54 @@
+# French translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-10-24 19:02+0200\n"
+"PO-Revision-Date: 2015-10-23 12:16+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+#: iaecal/forms.py:30
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: iaecal/forms.py:35
+msgid "Password"
+msgstr "Mot de passe"
+
+#: iaecal/forms.py:47
+msgid "Invalid username or password"
+msgstr "Nom d'utilisateur ou mot de passe invalide"
+
+#: iaecal/templates/index.html:26
+msgid "IAE Calendar"
+msgstr "Emploi du temps IAE"
+
+#: iaecal/templates/index.html:28
+msgid "Get a link to synchronise your IAE agenda to Google Calendar."
+msgstr "Obtenir un lien pour synchroniser son agenda IAE avec Google Calendar."
+
+#: iaecal/templates/index.html:39
+msgid "Your username and password are stored encrypted in the database."
+msgstr ""
+"Identifiant et mot de passe ne sont pas enregistrés en clair dans la base"
+" de donnée."
+
+#: iaecal/templates/index.html:43
+msgid "Get the url"
+msgstr "Obtenir le lien"
+
+#: iaecal/templates/index.html:54
+msgid "Copy past this link in Google Calender to synchronise your events:"
+msgstr "Copier Coller ce lien pour l'utiliser avec Google Calendar:"
+

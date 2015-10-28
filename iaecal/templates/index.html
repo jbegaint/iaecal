@@ -1,0 +1,63 @@
+{% from "_form_helpers.html" import render_field %}
+
+<html ng-app="IAECalApp">
+	<head>
+		<title>IAECal</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+
+		{% assets filters='yui_css', output='css/main.min.css', 'css/main.css' %}
+		<link href="{{ ASSET_URL }}" rel="stylesheet" media="screen">
+		{% endassets %}
+
+		<script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='bower_components/angular/angular.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='bower_components/spin.js/spin.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='bower_components/angular-spinner/angular-spinner.min.js') }}"></script>
+
+		{% assets filters='jsmin', output='js/main.min.js', 'js/main.js' %}
+		<script src="{{ ASSET_URL }}"></script>
+		{% endassets %}
+	</head>
+	<body ng-controller="IAECalController">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3 panel panel-default">
+					<h1>{{ _("IAE Calendar") }}</h1>
+					<p class="text-center">
+						{{ _("Get a link to synchronise your IAE agenda to Google Calendar.") }}
+					</p>
+					<form name="form" role="form" ng-submit="submitForm()" novalidate ngCloak>
+						{{ render_field(form.username) }}
+						{{ render_field(form.password) }}
+
+						<div class="form-group" name="non_field_errors" ng-model="non_field_errors" ng-show="hasError('non_field_errors')" ng-class="{'has-error': hasError('non_field_errors')}">
+							<span class="help-block text-center">{a errors.non_field_errors a}</span>
+						</div>
+
+						<p class="help-block text-center">
+							{{ _("Your username and password are stored encrypted in the database.") }}
+						</p>
+						<p class="text-center">
+							<button class="btn btn-success btn-lg btn-url" type="submit" ng-class="{'disabled': showUrl }">
+								{{ _("Get the url") }}
+							</button>
+						</p>
+					</form>
+
+					<span us-spinner spinner-key="spinner-form" spinner-theme=""></span>
+
+				</div> <!-- col-md-6 col-md-offset-3 -->
+
+				<div class="col-md-6 col-md-offset-3 panel" ng-show="(showUrl)">
+					<p class="help-block text-center">
+						{{ _("Copy past this link in Google Calender to synchronise your events:") }}
+					</p>
+					<a class="cal-url" href="{a serverData.url a}">
+						{a serverData.url a}
+					</a>
+				</div> <!-- col-md-6 col-md-offset-3 -->
+			</div> <!-- row -->
+		</div> <!-- container -->
+	</body>
+</html>

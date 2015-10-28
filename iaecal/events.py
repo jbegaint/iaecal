@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+# events.py
 
 import requests
 import json
@@ -7,13 +7,8 @@ import pytz
 from icalendar import Calendar as iCalendar, Event, Timezone
 from datetime import datetime, timedelta
 
-MAX_N_WEEKS = 10
+N_WEEKS = 4
 TIMEZONE = "Europe/Paris"
-
-
-# utils functions
-def clamp(val, lo, hi):
-    return min(max(val, lo), hi)
 
 
 def string_to_datetime(s):
@@ -21,19 +16,18 @@ def string_to_datetime(s):
 
 
 class Calendar(iCalendar):
-    def __init__(self, n_weeks, *args, **kwargs):
+    def __init__(self, username, password, *args, **kwargs):
         super(Calendar, self).__init__(*args, **kwargs)
 
         self.login_url = os.environ.get('CAL_LOGIN_URL')
         self.events_url = os.environ.get('CAL_EVENTS_URL')
-        self.username = os.environ.get('CAL_USERNAME')
-        self.password = os.environ.get('CAL_PASSWORD'),
+        self.username = username
+        self.password = password
 
-        if (not self.login_url or not self.events_url or not
-                self.username or not self.password):
+        if not self.login_url or not self.events_url:
             raise ValueError('Invalid configuration')
 
-        self.n_weeks = self.parse_n_weeks(n_weeks)
+        self.n_weeks = N_WEEKS
 
         self.add('prodid', '-//IAE Calendar//')
         self.add('version', '2.0')
@@ -44,13 +38,6 @@ class Calendar(iCalendar):
         tzc.add('tzid', TIMEZONE)
         tzc.add('x-lic-location', TIMEZONE)
         self.add_component(tzc)
-
-    def parse_n_weeks(self, n_weeks):
-        try:
-            n = clamp(int(n_weeks), 1, MAX_N_WEEKS)
-        except ValueError:
-            n = 1
-        return n
 
     def update(self):
         data = self.get_data()
@@ -99,18 +86,3 @@ class Calendar(iCalendar):
 
     def display(self):
         return self.to_ical().replace('\n\r', '\n').strip()
-
-
-def main():
-    import sys
-    try:
-        n = int(sys.argv[1])
-    except (IndexError, ValueError):
-        n = 1
-
-    cal = Calendar(n)
-    cal.update()
-    print(cal.display())
-
-if __name__ == "__main__":
-    main()

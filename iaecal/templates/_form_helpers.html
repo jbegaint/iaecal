@@ -1,0 +1,15 @@
+{# _form_helpers.html #}
+
+{% macro render_field(field) %}
+	<div class="form-group" ng-class="{'has-error': hasError('{{ field.name }}')}">
+		{{ field(class_="form-control", ng_model=field.name, placeholder=field.label.text)|safe }}
+
+		<ul ng-show="hasError('{{ field.name }}')">
+			<li>
+				<span class="help-block">
+					{a errors.{{ field.name }} a}
+				</span>
+			</li>
+		</ul>
+	</div>
+{% endmacro %}
