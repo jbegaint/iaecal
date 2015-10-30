@@ -6,6 +6,7 @@ class Config(object):
     DEBUG = False
     SECRET_KEY = os.environ['SECRET_KEY']
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SQLALCHEMY_POOL_RECYCLE = 3600
 
     # Babel
     ACCEPT_LANGUAGES = ['fr', 'en']
